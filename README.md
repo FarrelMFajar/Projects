@@ -14,6 +14,7 @@ In this section I will list data analytics projects briefly describing the metho
 ### Covid-19 Data Exploration
 
 **Code:** ['covid.csv'](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/tree/main/Covid-19%20Data%20Exploration)
+
 **Project Description:**
 The proje­ct focuses on examining COVID-19 data in Jakarta for 2021. It involves loading the­ dataset, cleaning and preparing the­ data, and conducting exploratory data analysis (EDA) to uncover insights from the available­ information. 
 
