@@ -34,6 +34,75 @@ Open Power BI
 4. Advanced options → **Input your Query** → Next
 5. **Transform Data**. if you already did the data cleaning via SQL beforehand like what I did, click **load** instead.
 
+### New Measures
+Despite my best efforts to utilize SQL for data cleaning and tranformation, some data are more effectively done in power DAX measures in Power BI.
+#### 1. Cumulative Cases, Deaths, Recoveries
+For cumulative Cases, Deaths, and Recoveries, the callout is made in such a way that it's compatible with the date range filter that's in the dashboard. The cumulative variable can be expressed with the equation below:
+```
+Cumulative = f(tb) - (f(ta) - f(to)), where
+f = The value function of cumulative case, death, or recoveries over time 
+ta = First filtered date
+tb = Last filtered date
+to = Very first date regardless of filter
+```
+A new measure is added that incorporates the equation above into DAX language. Replace variable "efu" to change from case to death or recoveries. The date _t_ is stored in column "combination[tanggal]"
+```
+var efu = total_cases
+Cumulative Data =
+var fb =  CALCULATE(
+            sum(combination[efu]),
+            FILTER(
+              combination, combination[tanggal]=
+              max(combination[tanggal])
+            )
+          )
+var fa =  CALCULATE(
+            sum(combination[efu]),
+            ALL(combination[tanggal]),
+            FILTER(
+              ALL(combination),combination[tanggal] = MIN(combination[tanggal])
+            )
+          )
+var fo = CALCULATE(
+            sum(combination[efu]),
+            ALL(combination[tanggal]),
+            FILTER(
+              ALL(combination),combination[tanggal] = FIRSTDATE(all(combination[tanggal]))
+            )
+          )
+RETURN fb = fa-fo
+```
+
+#### 2. The difference between the data from latest date and the date before the latest date
+This measure is used for all callout cards except CFR. The difference df can be expressed with the equation below:
+```
+df = f(tb) - ft(b-1)), where
+f = The value function of cumulative case, death, or recoveries over time
+tb = Last filtered date
+tb-1 = previous recorded date before last filtered date
+```
+In addition to the calculation, the "plus" notation needs to be added for any positive changes. As a result, the variable _df_ will be converted to string format, _df_ is reformatted beforehand so that the number shows thousands separator. Replace variable "efu" to the data you want to see the delta. The date _t_ is stored in column "combination[tanggal]"
+```
+var efu = total_cases
+var tb = 
+    CALCULATE(
+    sum(combination[efu]),
+    filter(
+        combination, combination[tanggal] = max(combination[tanggal])))
+
+var tbminusone = 
+CALCULATE(
+    sum(combination[efu]),
+    filter(
+        combination, combination[tanggal] =
+        CALCULATE(MAX( combination[tanggal] ),REMOVEFILTERS(combination),combination[tanggal]<max(combination[tanggal]))))
+return 
+        "(" &
+        if(tb>=tbminusone,"+",if(tb=tbminusone,"±"))
+        & format(tb-tbminusone,"#,##0") 
+        & ")" 
+```
+
 ### Page #1. Dashboard
 **Slicers**
 1. Date range
@@ -76,7 +145,7 @@ Open Power BI
 1. Value-time callout card with district for small multiples
 2. "ALL" callout card for reference
 
-### 2.3.4. Interactive District Chart
+### Page #4. Interactive District Chart
 This is an interactive chart to observe all parameters in a single district (or single city) 
 
 **Slicers**
