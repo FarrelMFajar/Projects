@@ -220,3 +220,61 @@ WHERE
     peak_rank = 1
 ORDER BY
     month_year, peak_mortality_rate DESC;
+
+---6. Exploratory Data Analysis: Combine 4 and 5 for easier import to data visualization tools. The district is included to create district-wise charts. Province is added for futureproofing
+
+WITH covid_summary AS (
+    SELECT 
+        c.tanggal,c.nama_provinsi,
+        c.nama_kota,c.nama_kecamatan,
+        SUM(CASE WHEN c.sub_kategori = 'dirawat' THEN c.jumlah ELSE 0 END) AS hospitalized,
+        SUM(CASE WHEN c.sub_kategori = 'self isolation' THEN c.jumlah ELSE 0 END) AS self_isolation,
+        SUM(CASE WHEN c.sub_kategori = 'sembuh' THEN c.jumlah ELSE 0 END) AS recovered,
+        SUM(CASE WHEN c.sub_kategori IN ('Meninggal') THEN c.jumlah ELSE 0 END) AS total_deaths
+    FROM 
+        jakarta_covid.dbo.covid c
+    GROUP BY 
+        c.tanggal,c.nama_provinsi, c.nama_kota,c.nama_kecamatan
+)
+
+SELECT 
+    c.tanggal,
+    DATEPART(year, c.tanggal) AS tahun,
+    DATENAME(month, c.tanggal) AS bulan,
+    (DATEPART(DAY, c.tanggal) - 1) / 7 + 1 AS week,
+	c.nama_provinsi,
+    c.nama_kota,c.nama_kecamatan,
+    c.hospitalized,
+    c.self_isolation,
+    c.recovered,
+    c.recovered - LAG(c.recovered) OVER (PARTITION BY c.nama_kota,c.nama_kecamatan ORDER BY c.tanggal) AS recovered_delta,
+    c.total_deaths,
+    c.total_deaths - LAG(c.total_deaths) OVER (PARTITION BY c.nama_kota,c.nama_kecamatan ORDER BY c.tanggal) AS total_deaths_delta,
+    r.total_cases,
+    r.total_cases-LAG(r.total_cases) OVER (PARTITION BY c.nama_kota,c.nama_kecamatan ORDER BY c.tanggal) AS total_cases_delta,
+    r.recovery_rate,
+    r.mortality_rate
+FROM 
+    covid_summary c
+JOIN (
+    SELECT
+        tanggal,
+        DATEPART(year, tanggal) as tahun,
+        DATENAME(month, tanggal) as bulan,
+        (DATEPART(DAY, tanggal) - 1) / 7 + 1 AS week,
+        nama_provinsi,nama_kota,nama_kecamatan,
+        SUM(CASE WHEN sub_kategori IN ('Sembuh') THEN jumlah ELSE 0 END) AS total_recoveries,
+        SUM(CASE WHEN sub_kategori IN ('Meninggal') THEN jumlah ELSE 0 END) AS total_deaths,
+        SUM(CASE WHEN kategori IN ('Positif') THEN jumlah ELSE 0 END) AS total_cases,
+        CAST(SUM(CASE WHEN sub_kategori = 'Sembuh' THEN jumlah ELSE 0 END) AS FLOAT) / NULLIF(SUM(jumlah), 0) AS recovery_rate,
+        CAST(SUM(CASE WHEN sub_kategori IN ('Meninggal') THEN jumlah ELSE 0 END) AS FLOAT) / NULLIF(SUM(jumlah), 0) AS mortality_rate
+    FROM
+        Jakarta_covid.dbo.covid
+    GROUP BY
+        tanggal,
+        nama_provinsi,
+        nama_kota,nama_kecamatan
+) r ON c.tanggal = r.tanggal AND c.nama_kota = r.nama_kota AND c.recovered = r.total_recoveries AND c.total_deaths = r.total_deaths AND c.nama_kecamatan = r.nama_kecamatan
+ORDER BY 
+    c.tanggal, c.nama_kota, c.nama_kecamatan;
+
