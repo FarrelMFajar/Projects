@@ -1,4 +1,4 @@
-## COVID-19 Dashboard
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/e77669d1-c1d4-4c5f-a5c6-342ea494177c)## COVID-19 Dashboard
 
 ### Dashboard Link: https://app.powerbi.com/groups/me/reports/19393122-81c5-4d1e-8258-f6e320048b57/ReportSection
 
@@ -36,6 +36,11 @@ Open Power BI
 
 ### New Measures
 Despite my best efforts to utilize SQL for data cleaning and tranformation, some data are more effectively done in power DAX measures in Power BI.
+
+The resulting measures in numbers 1., 3., and 4 are each displayed in a callout card like this. The resulting measure in number 2. is made in textbox and positioned below the main measure. 
+
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/7f074fd5-0970-4884-b862-3ed7a7e10bb7)
+
 #### 1. Cumulative Cases, Deaths, Recoveries
 For cumulative Cases, Deaths, and Recoveries, the callout is made in such a way that it's compatible with the date range filter that's in the dashboard. The cumulative variable can be expressed with the equation below:
 ```
@@ -47,8 +52,8 @@ to = Very first date regardless of filter
 ```
 A new measure is added that incorporates the equation above into DAX language. Replace variable "efu" to change from case to death or recoveries. The date _t_ is stored in column "combination[tanggal]"
 ```
-var efu = total_cases
 Cumulative Data =
+var efu = [total_cases]
 var fb =  CALCULATE(
             sum(combination[efu]),
             FILTER(
@@ -81,9 +86,10 @@ f = The value function of cumulative case, death, or recoveries over time
 tb = Last filtered date
 tb-1 = previous recorded date before last filtered date
 ```
-In addition to the calculation, the "plus" notation needs to be added for any positive changes. As a result, the variable _df_ will be converted to string format, _df_ is reformatted beforehand so that the number shows thousands separator. Replace variable "efu" to the data you want to see the delta. The date _t_ is stored in column "combination[tanggal]"
+In addition to the calculation, the "plus" notation needs to be added for any positive changes and ± for zero. As a result, the variable _df_ will be converted to string format, _df_ is reformatted beforehand so that the number shows thousands separator. Replace variable "efu" to the data you want to see the delta. The date _t_ is stored in column "combination[tanggal]"
 ```
-var efu = total_cases
+delta =
+var efu = [total_cases]
 var tb = 
     CALCULATE(
     sum(combination[efu]),
@@ -103,53 +109,52 @@ return
         & ")" 
 ```
 
+#### 3. Current Hospitalization and Isolation
+Both variables only use the data of the latest date, thus the DAX function is as follows:
+```
+var efu = total
+RETURN
+CALCULATE(sum()),
+    filter(
+        combination, combination[tanggal] =
+        max(combination[tanggal]) ))
+```
+
+#### 4. Case-Fatality Rate (CFR)
+Two methods are used to calculate the CFR. The latter was proposed in concern to data inaccuracy
+* Traditional
+```
+CFR =  death(tb) - death(ta)
+      -----------------------
+        case(tb) - case(ta)
+```
+* [Wang et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7569625/#ref5)
+```
+CFR =                  death(tb) - death(ta)
+      ---------------------------------------------------- , where
+      recovered(tb)-recovered(ta) + death(tb) - death(ta)
+```
+where
+```
+death(t) = Cumulative deaths
+case(t) = Cumulative cases
+recovered(t) = Cumulative recoveries
+ta = First filtered date
+tb = Last filtered date
+```
+
 ### Page #1. Dashboard
-**Slicers**
-1. Date range
-2. City
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/839cb531-a7b2-4325-8a0c-1cd70cdf1a1f)
+The main thing. The user can adjust date range, which city, and which district to be shown.
 
-**Callouts**, includes change from the previous date
-1. Cumulative Cases (between two dates bound by the slicer)
-2. Cumulative Deaths (between two dates bound by the slicer)
-3. Cumulative Recoveries (between two dates bound by the slicer)
-4. Latest Hospitalizations 
-5. Latest Self-Isolations 
-
-**Charts**
-1. Cumulative Cases
-2. Cumulative Deaths
-3. Cumulative Recoveries
-4. Weekly New Cases
-5. Weekly new Deaths
-6. Weekly New recoveries
-7. Weekly Hospitalizations and Self-Isolations
-8. Case-Fatality Ratio
-  
 ### Page #2. Summary Weekly Charts
-**Slicers**
-1. Date range
-2. City
-3. Parameters (Based on charts in 2.3.1.)
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/ee8eba67-00e0-4c6c-a2e7-3e6e799bb04b)
+A set of charts used to compare the evolution of COVID-19 stats among all 44 districts in Jakarta.
 
-**Charts**
-1. Value-time chart with district for small multiples
-2. "ALL" chart for reference
-  
 ### Page #3. Fact Sheet
-**Slicers**
-1. Date range
-2. City
-3. Parameters (Based on callouts in 2.3.1.)
-
-**Charts**
-1. Value-time callout card with district for small multiples
-2. "ALL" callout card for reference
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/2da64ef2-bf91-4e95-beb5-ff50b6937a12)
+Extension of page 2. Rather than using charts, callout cards are used to show the metrics for each district.
 
 ### Page #4. Interactive District Chart
-This is an interactive chart to observe all parameters in a single district (or single city) 
-
-**Slicers**
-1. Date range
-2. City
-3. Parameters (Based on charts in 2.3.1.)
-4. Parameters (based on charts in 2.3.1.)
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/1eebb819-aad4-4de1-8ec9-f8424071d24d)
+This is an interactive chart to observe all parameters in a single district (or single city) .
