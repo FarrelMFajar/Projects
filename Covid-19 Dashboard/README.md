@@ -1,4 +1,4 @@
-![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/e77669d1-c1d4-4c5f-a5c6-342ea494177c)## COVID-19 Dashboard
+## COVID-19 Dashboard
 
 ### Dashboard Link: https://app.powerbi.com/groups/me/reports/19393122-81c5-4d1e-8258-f6e320048b57/ReportSection
 
