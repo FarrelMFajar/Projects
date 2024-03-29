@@ -1,6 +1,6 @@
 ## COVID-19 Dashboard
 
-### Dashboard Link: https://app.powerbi.com/groups/me/reports/19393122-81c5-4d1e-8258-f6e320048b57/ReportSection
+### Dashboard Link: [Link](https://univindonesia-my.sharepoint.com/:u:/g/personal/farrel_mahardhika01_office_ui_ac_id/EeeaunE_bMFAnM27hse-JfoBYmt-JyPhUJR2UiVI2eJwDg?e=RpCKiw)
 
 ### Problem Statement
 
