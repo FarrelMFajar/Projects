@@ -53,3 +53,58 @@ The report consists of four visualization pages.
 * DAX Measure Calculations
 * Data Visualization: Card, Line Chart, Area Chart, Small Multiples, Slicer Handling, Data Filtering
 * Dashboard User Interface
+
+
+### 3. OSHA Incident Data Exploration
+#### Code: 'osha_violation.sql'
+
+#### 3.1. Project Description:
+The project focuses on examining OSHA incident data from 2015 to 2017. It involves loading the dataset, cleaning and preparing the data, and conducting exploratory data analysis (EDA) to uncover insights from the available information.
+
+#### 3.2. Data Loading:
+The dataset contains records of OSHA incidents with various columns, including event date, event ID, abstract text, event description, event keywords, degree of injury, construction end use, building stories, project cost, project type, nature of injury, part of body, event type, environmental factor, human factor, task assigned, hazsub, fat_cause, and fall_ht.
+
+#### 3.3. Data Cleaning:
+* Initial check to load and inspect the data.
+* Identified and handled duplicate Event IDs.
+* Corrected abstract text that was split across multiple rows.
+* Fixed improper usage of the question mark ("?") in event descriptions.
+* Created new table clean_incidents to put in the cleaned data with the corrected abstract text and cleaned event descriptions.
+* Set Event ID as the primary key in the clean_incidents table.
+
+#### 3.4. Data Exploration:
+* Examined the total occurrence of keywords and their distribution between fatal and nonfatal incidents.
+* Explored the frequency and percentage of each nature of injury.
+* Analyzed incidents grouped by nature of injury, part of body, and event type.
+* Investigated monthly occurrences of OSHA violations, grouped by degree of injury (fatal/non-fatal).
+
+#### 3.5. Skills Showcase:
+* Microsoft SQL Server Management Studio (SSMS)
+* Data cleaning, aggregation, common table expressions (CTEs), and data transformation.
+* Data manipulation, preprocessing, and exploratory data analysis.
+* Functions: SELECT, CASE WHEN, GROUP BY, ORDER BY, CROSS APPLY, STRING_SPLIT, FORMAT, ALTER TABLE, COUNT, SUM, CONCAT, INFORMATION_SCHEMA.COLUMNS, HAVING
+
+#### 3.6. Detailed SQL Steps:
+
+##### 1. Initial Data Inspection:
+* Loaded the OSHA incident data and inspected the initial dataset.
+
+##### 2. Data Cleaning:
+* Checked for duplicate Event IDs and verified the kind of duplicates.
+* Corrected split abstract text and improper usage of the question mark ("?").
+* Created a new table clean_incidents with the cleaned data.
+
+##### 3. Primary Key Assignment:
+* Set the Event ID column as the primary key for the clean_incidents table.
+
+##### 4. Keyword Analysis:
+* Analyzed the total occurrence of keywords.
+* Investigated the occurrence of each keyword grouped by fatal and nonfatal incidents.
+
+##### 5. Nature of Injury Analysis:
+* Checked and cleaned part of body and nature of injury data.
+* Ranked nature of injuries by frequency and percentage of total occurrences.
+* Examined the distribution of incidents grouped by nature of injury and part of body.
+
+##### 6. Monthly Occurrence Analysis:
+* Analyzed the monthly occurrence of OSHA violations, grouped by degree of injury (fatal/non-fatal).
