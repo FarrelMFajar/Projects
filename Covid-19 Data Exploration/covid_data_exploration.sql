@@ -278,3 +278,57 @@ JOIN (
 ORDER BY 
     c.tanggal, c.nama_kota, c.nama_kecamatan;
 
+---7a. Exploratory Data Analysis: Date with the greatest change in death count for each city.
+
+WITH CityDeathSummary AS (
+    SELECT
+        nama_kota,
+        tanggal,
+        SUM(CASE WHEN sub_kategori IN ('Meninggal', 'Probable Meninggal', 'Suspek meninggal') THEN jumlah ELSE 0 END) AS total_deaths,
+        LAG(SUM(CASE WHEN sub_kategori IN ('Meninggal', 'Probable Meninggal', 'Suspek meninggal') THEN jumlah ELSE 0 END)) OVER (PARTITION BY nama_kota ORDER BY tanggal) AS prev_total_deaths,
+        CASE WHEN LAG(SUM(CASE WHEN sub_kategori IN ('Meninggal', 'Probable Meninggal', 'Suspek meninggal') THEN jumlah ELSE 0 END)) OVER (PARTITION BY nama_kota ORDER BY tanggal) IS NULL THEN 0
+             ELSE SUM(CASE WHEN sub_kategori IN ('Meninggal', 'Probable Meninggal', 'Suspek meninggal') THEN jumlah ELSE 0 END) - LAG(SUM(CASE WHEN sub_kategori IN ('Meninggal', 'Probable Meninggal', 'Suspek meninggal') THEN jumlah ELSE 0 END)) OVER (PARTITION BY nama_kota ORDER BY tanggal)
+        END AS meninggal_delta
+    FROM
+        Jakarta_covid.dbo.covid
+    GROUP BY
+        nama_kota,
+        tanggal
+)
+
+SELECT
+    nama_kota,
+    tanggal AS date_with_greatest_death_change,
+    total_deaths AS total_deaths_on_date,
+    meninggal_delta AS greatest_death_change
+FROM
+    CityDeathSummary cds1
+WHERE
+    meninggal_delta = (SELECT MAX(meninggal_delta) FROM CityDeathSummary cds2 WHERE cds1.nama_kota = cds2.nama_kota)
+ORDER BY
+    nama_kota, tanggal;
+
+-- 7 
+SELECT
+    DATEPART(week, tanggal) AS week_number,
+    YEAR(tanggal) AS year,
+    SUM(CASE WHEN kategori = 'positif' AND sub_kategori = 'sembuh' THEN jumlah ELSE 0 END) AS total_recoveries,
+    SUM(CASE WHEN kategori = 'positif' AND sub_kategori IN ('meninggal', 'probable meninggal', 'suspek meninggal') THEN jumlah ELSE 0 END) AS total_deaths,
+    SUM(CASE WHEN kategori = 'positif' THEN jumlah ELSE 0 END) AS total_cases
+FROM
+    Jakarta_covid.dbo.covid
+GROUP BY
+    YEAR(tanggal), DATEPART(week, tanggal)
+ORDER BY
+    year, week_number;
+
+-- 8 moving average 
+SELECT
+    tanggal,
+    sum(jumlah),
+    AVG(sum(jumlah))  OVER (ORDER BY tanggal ROWS BETWEEN 7 PRECEDING AND CURRENT ROW) AS seven_day_ma
+FROM
+    jakarta_covid.dbo.covid
+group by tanggal
+ORDER BY
+    tanggal;
