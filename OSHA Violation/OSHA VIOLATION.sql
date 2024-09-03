@@ -231,7 +231,8 @@ WITH Monthly_Incidents AS (
         MONTH([Event Date]) AS [Month_Number], -- Extract the numeric month for ordering
         COUNT(*) AS [Total Incidents]
     FROM 
-        incidents
+        clean_incidents
+	WHERE [Degree of Injury] = 'Fatal'
     GROUP BY 
         YEAR([Event Date]), 
         DATENAME(MONTH, [Event Date]), 
