@@ -222,3 +222,51 @@ GROUP BY
 ORDER BY 
     [Year], 
     MONTH([Event Date]);
+
+--Which types of incidents are most common across all worksites?
+WITH Monthly_Incidents AS (
+    SELECT 
+        YEAR([Event Date]) AS [Year], 
+        DATENAME(MONTH, [Event Date]) AS [Month],
+        MONTH([Event Date]) AS [Month_Number], -- Extract the numeric month for ordering
+        COUNT(*) AS [Total Incidents]
+    FROM 
+        incidents
+    GROUP BY 
+        YEAR([Event Date]), 
+        DATENAME(MONTH, [Event Date]), 
+        MONTH([Event Date])
+),
+Monthly_Trend AS (
+    SELECT 
+        [Year], 
+        [Month],
+        [Month_Number],
+        [Total Incidents],
+        [Total Incidents] - LAG([Total Incidents], 1) OVER (ORDER BY [Year], [Month_Number]) AS [Change from Previous Month],
+        CASE 
+            WHEN [Total Incidents] - LAG([Total Incidents], 1) OVER (ORDER BY [Year], [Month_Number]) > 0 THEN 'Increase'
+            WHEN [Total Incidents] - LAG([Total Incidents], 1) OVER (ORDER BY [Year], [Month_Number]) < 0 THEN 'Decrease'
+            ELSE 'No Change'
+        END AS [Trend],
+        ROUND(
+            (CAST([Total Incidents] AS FLOAT) - LAG(CAST([Total Incidents] AS FLOAT), 1) OVER (ORDER BY [Year], [Month_Number])) * 100.0 / 
+            LAG(CAST([Total Incidents] AS FLOAT), 1) OVER (ORDER BY [Year], [Month_Number]), 2
+        ) AS [Percentage Change]
+    FROM 
+        Monthly_Incidents
+)
+SELECT 
+    [Year], 
+    [Month], 
+    [Total Incidents], 
+    [Change from Previous Month], 
+    [Percentage Change],
+    [Trend]
+FROM 
+    Monthly_Trend
+ORDER BY 
+    [Year], 
+    [Month_Number];
+
+
