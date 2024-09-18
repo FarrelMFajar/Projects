@@ -6,6 +6,26 @@
 
 This dashboard helps observers understand the development of Novel Coronavirus (COVID-19) cases, down to every district within cities of Jakarta province, Indonesia. It also lets the user observe the dynamics of the data range back in 2021 and obtain historical analysis with how cases, deaths, recoveries, and other metrics evolved over time. In addition, this data can be used to evaluate the effectiveness of policy stated by the Ministry of health.
 
+### Page #1. Executive Summary
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/839cb531-a7b2-4325-8a0c-1cd70cdf1a1f)
+The user can adjust date range, which city, and which district to be shown.
+
+It was revealed that peak season took place in week 2 of July.
+
+### Page #2. Summary Weekly Charts
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/ee8eba67-00e0-4c6c-a2e7-3e6e799bb04b)
+A set of charts used to compare the evolution of COVID-19 stats among all 44 districts in Jakarta.
+Peak season was the highest in Jagakarsa, peaking at 4,062 positive cases
+
+### Page #3. Fact Sheet
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/2da64ef2-bf91-4e95-beb5-ff50b6937a12)
+Extension of page 2. Rather than using charts, callout cards are used to show the metrics for each district.
+
+### Page #4. Interactive District Chart
+![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/1eebb819-aad4-4de1-8ec9-f8424071d24d)
+This is an interactive chart to observe all parameters in a single district (or single city) .
+
+
 ### Data Import
 
 There are two ways to import the resulting table into Power BI.
@@ -143,18 +163,3 @@ ta = First filtered date
 tb = Last filtered date
 ```
 
-### Page #1. Dashboard
-![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/839cb531-a7b2-4325-8a0c-1cd70cdf1a1f)
-The main thing. The user can adjust date range, which city, and which district to be shown.
-
-### Page #2. Summary Weekly Charts
-![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/ee8eba67-00e0-4c6c-a2e7-3e6e799bb04b)
-A set of charts used to compare the evolution of COVID-19 stats among all 44 districts in Jakarta.
-
-### Page #3. Fact Sheet
-![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/2da64ef2-bf91-4e95-beb5-ff50b6937a12)
-Extension of page 2. Rather than using charts, callout cards are used to show the metrics for each district.
-
-### Page #4. Interactive District Chart
-![image](https://github.com/FarrelMFajar/Data-Analyst-Portofolio/assets/163612902/1eebb819-aad4-4de1-8ec9-f8424071d24d)
-This is an interactive chart to observe all parameters in a single district (or single city) .
