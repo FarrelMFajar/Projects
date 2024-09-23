@@ -369,6 +369,7 @@ def display_graph(students_to_graph):
     plt.tight_layout()
     plt.show()
 
+# Function to export student data to a CSV file (without Total Score and Average Score columns)
 def export_to_csv():
     file_name = input("Enter the CSV file name to export to (or type 'back()' to go back, 'exit()' to exit): ")
     if file_name.lower() == 'exit()':
@@ -380,6 +381,7 @@ def export_to_csv():
     file_name = ensure_csv_extension(file_name)
     
     try:
+        # Only write the fields without "Total Score" and "Average Score"
         with open(file_name, mode='w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=["Name", "Student ID", "Math Score", "Science Score", "English Score"])
             writer.writeheader()
@@ -388,6 +390,7 @@ def export_to_csv():
     except Exception as e:
         print(f"An error occurred while exporting data: {e}")
 
+# Function to import student data from a CSV file (adding Total and Average scores)
 def import_from_csv():
     file_name = input("Enter the CSV file name to import from (or type 'back()' to go back, 'exit()' to exit): ")
     if file_name.lower() == 'exit()':
@@ -403,9 +406,11 @@ def import_from_csv():
             reader = csv.DictReader(file)
             imported_students = []
             for row in reader:
+                # Calculate total and average scores
                 total_score = int(row["Math Score"]) + int(row["Science Score"]) + int(row["English Score"])
                 average_score = total_score / 3
 
+                # Create the student dictionary and include the calculated total and average scores
                 student = {
                     "Name": row["Name"],
                     "Student ID": int(row["Student ID"]),
@@ -431,6 +436,7 @@ def import_from_csv():
         print(f"CSV file must contain the following columns: Name, Student ID, Math Score, Science Score, English Score.")
     except ValueError:
         print("Invalid data format in CSV file. Please ensure all scores and Student ID are integers.")
+
 
 
 # Function to ensure the file name has a .csv extension
