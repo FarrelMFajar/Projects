@@ -70,7 +70,7 @@ def create_student():
                 elif choice == 'no':
                     return
                 elif choice == 'back()':
-                    break
+                    return
                 elif choice == 'menu()':
                     return 'menu()'
                 else:
@@ -291,8 +291,147 @@ def display_table(filtered_students, headers):
 
 # Function to display graphs based on filtered or full data
 def display_graph(students_to_graph):
-    # (same code for the graph logic you already have)
-    pass
+    if not students_to_graph:
+        print("No student data to display.")
+        return
+
+    # Sort the students by their scores for each subject in descending order
+    students_to_graph_sorted_by_math = sorted(students_to_graph, key=lambda s: s["Math Score"], reverse=True)
+    students_to_graph_sorted_by_science = sorted(students_to_graph, key=lambda s: s["Science Score"], reverse=True)
+    students_to_graph_sorted_by_english = sorted(students_to_graph, key=lambda s: s["English Score"], reverse=True)
+
+    # Font size for labels (reduced by 50%)
+    label_font_size = 7
+
+    # Math scores (Horizontal Bar Chart)
+    student_names = [s["Name"] for s in students_to_graph_sorted_by_math]
+    math_scores = [s["Math Score"] for s in students_to_graph_sorted_by_math]
+    class_avg_math = sum(math_scores) / len(students_to_graph)
+
+    plt.figure(figsize=(10, 12))
+    plt.barh(student_names, math_scores, label="Math Scores")
+    plt.axvline(x=class_avg_math, color='r', linestyle='--', label=f"Class Avg Math: {class_avg_math:.2f}")
+    plt.title("Math Scores", fontsize=label_font_size * 1.5)
+    plt.ylabel("Students", fontsize=label_font_size)
+    plt.xlabel("Scores", fontsize=label_font_size)
+    
+    # Adding data labels on the right side of the bars
+    for i, score in enumerate(math_scores):
+        plt.text(score + 1, i, f'{score}', va='center', fontsize=label_font_size)
+
+    plt.xticks(fontsize=label_font_size)
+    plt.yticks(fontsize=label_font_size)
+    plt.legend(fontsize=label_font_size)
+    plt.tight_layout()
+    plt.show()
+
+    # Science scores (Horizontal Bar Chart)
+    student_names = [s["Name"] for s in students_to_graph_sorted_by_science]
+    science_scores = [s["Science Score"] for s in students_to_graph_sorted_by_science]
+    class_avg_science = sum(science_scores) / len(students_to_graph)
+
+    plt.figure(figsize=(10, 12))
+    plt.barh(student_names, science_scores, label="Science Scores", color='g')
+    plt.axvline(x=class_avg_science, color='r', linestyle='--', label=f"Class Avg Science: {class_avg_science:.2f}")
+    plt.title("Science Scores", fontsize=label_font_size * 1.5)
+    plt.ylabel("Students", fontsize=label_font_size)
+    plt.xlabel("Scores", fontsize=label_font_size)
+    
+    # Adding data labels on the right side of the bars
+    for i, score in enumerate(science_scores):
+        plt.text(score + 1, i, f'{score}', va='center', fontsize=label_font_size)
+
+    plt.xticks(fontsize=label_font_size)
+    plt.yticks(fontsize=label_font_size)
+    plt.legend(fontsize=label_font_size)
+    plt.tight_layout()
+    plt.show()
+
+    # English scores (Horizontal Bar Chart)
+    student_names = [s["Name"] for s in students_to_graph_sorted_by_english]
+    english_scores = [s["English Score"] for s in students_to_graph_sorted_by_english]
+    class_avg_english = sum(english_scores) / len(students_to_graph)
+
+    plt.figure(figsize=(10, 12))
+    plt.barh(student_names, english_scores, label="English Scores", color='b')
+    plt.axvline(x=class_avg_english, color='r', linestyle='--', label=f"Class Avg English: {class_avg_english:.2f}")
+    plt.title("English Scores", fontsize=label_font_size * 1.5)
+    plt.ylabel("Students", fontsize=label_font_size)
+    plt.xlabel("Scores", fontsize=label_font_size)
+    
+    # Adding data labels on the right side of the bars
+    for i, score in enumerate(english_scores):
+        plt.text(score + 1, i, f'{score}', va='center', fontsize=label_font_size)
+
+    plt.xticks(fontsize=label_font_size)
+    plt.yticks(fontsize=label_font_size)
+    plt.legend(fontsize=label_font_size)
+    plt.tight_layout()
+    plt.show()
+
+def export_to_csv():
+    file_name = input("Enter the CSV file name to export to (or type 'back()' to go back, 'exit()' to exit): ")
+    if file_name.lower() == 'exit()':
+        print("Exiting the program. Goodbye!")
+        exit()
+    if file_name.lower() == 'back()':
+        return
+    
+    file_name = ensure_csv_extension(file_name)
+    
+    try:
+        with open(file_name, mode='w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=["Name", "Student ID", "Math Score", "Science Score", "English Score"])
+            writer.writeheader()
+            writer.writerows(students)
+            print(f"Successfully exported {len(students)} students to {file_name}.")
+    except Exception as e:
+        print(f"An error occurred while exporting data: {e}")
+
+def import_from_csv():
+    file_name = input("Enter the CSV file name to import from (or type 'back()' to go back, 'exit()' to exit): ")
+    if file_name.lower() == 'exit()':
+        print("Exiting the program. Goodbye!")
+        exit()
+    if file_name.lower() == 'back()':
+        return
+
+    file_name = ensure_csv_extension(file_name)
+    
+    try:
+        with open(file_name, mode='r') as file:
+            reader = csv.DictReader(file)
+            imported_students = []
+            for row in reader:
+                total_score = int(row["Math Score"]) + int(row["Science Score"]) + int(row["English Score"])
+                average_score = total_score / 3
+
+                student = {
+                    "Name": row["Name"],
+                    "Student ID": int(row["Student ID"]),
+                    "Math Score": min(int(row["Math Score"]), 100),
+                    "Science Score": min(int(row["Science Score"]), 100),
+                    "English Score": min(int(row["English Score"]), 100),
+                    "Total Score": total_score,
+                    "Average Score": average_score
+                }
+
+                # Check for duplicates during import
+                existing_student = check_duplicate(student["Name"], student["Student ID"])
+                if existing_student:
+                    print(f"Duplicate found for '{student['Name']}' with ID '{student['Student ID']}' in CSV. Skipping import for this record.")
+                    continue
+
+                imported_students.append(student)
+            students.extend(imported_students)
+            print(f"Successfully imported {len(imported_students)} students from {file_name}.")
+    except FileNotFoundError:
+        print(f"File '{file_name}' not found. Please check the file name and try again.")
+    except KeyError:
+        print(f"CSV file must contain the following columns: Name, Student ID, Math Score, Science Score, English Score.")
+    except ValueError:
+        print("Invalid data format in CSV file. Please ensure all scores and Student ID are integers.")
+
 
 # Function to ensure the file name has a .csv extension
 def ensure_csv_extension(file_name):
@@ -300,6 +439,24 @@ def ensure_csv_extension(file_name):
         file_name += '.csv'
         print(f"File extension '.csv' added automatically. New file name: {file_name}")
     return file_name
+
+def delete_student():
+    while True:
+        student_id = get_int_input("Enter the Student ID of the student to delete (or type 'back()' to go back, 'exit()' to exit): ")
+        if student_id == 'exit()':
+            print("Exiting the program. Goodbye!")
+            exit()
+        if student_id == 'back()':
+            return
+
+        # Search for the student by Student ID
+        for student in students:
+            if student["Student ID"] == student_id:
+                students.remove(student)
+                print(f"Student with ID {student_id} has been deleted successfully!")
+                return
+
+        print(f"No student found with the ID {student_id}.")
 
 def main_menu():
     while True:
