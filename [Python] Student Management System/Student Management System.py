@@ -116,8 +116,26 @@ def create_student():
         
         students.append(student)
         print(f"Student {name} has been added successfully!")
+        
         break
+        
+def update_student():
+    while True:
+        student_id = get_int_input("Enter the Student ID of the student to update (or type 'back()' to go back, 'exit()' to exit): ")
+        if student_id == 'exit()':
+            print("Exiting the program. Goodbye!")
+            exit()
+        if student_id == 'back()':
+            return
 
+        # Search for the student by Student ID
+        for student in students:
+            if student["Student ID"] == student_id:
+                update_student_data(student)
+                return
+
+        print(f"No student found with the ID {student_id}.")
+        
 # Update student data
 def update_student_data(student):
     print(f"Updating data for {student['Name']} (ID: {student['Student ID']})")
@@ -385,10 +403,23 @@ def export_to_csv():
         with open(file_name, mode='w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=["Name", "Student ID", "Math Score", "Science Score", "English Score"])
             writer.writeheader()
-            writer.writerows(students)
+
+            # Write only the necessary fields for each student
+            for student in students:
+                # Create a subset of the student dictionary excluding Total and Average scores
+                student_data = {
+                    "Name": student["Name"],
+                    "Student ID": student["Student ID"],
+                    "Math Score": student["Math Score"],
+                    "Science Score": student["Science Score"],
+                    "English Score": student["English Score"]
+                }
+                writer.writerow(student_data)
+            
             print(f"Successfully exported {len(students)} students to {file_name}.")
     except Exception as e:
         print(f"An error occurred while exporting data: {e}")
+
 
 # Function to import student data from a CSV file (adding Total and Average scores)
 def import_from_csv():
@@ -467,13 +498,13 @@ def delete_student():
 def main_menu():
     while True:
         print("\n--- Main Menu ---")
-        print("[1]. Create a new student")
-        print("[2]. Read all students")
-        print("[3]. Update a student's data")
-        print("[4]. Delete a student")
-        print("[5]. Import students from a CSV file")
-        print("[6]. Export students to a CSV file")
-        print("[7]. Exit the program")
+        print("[1]. [Create] a new student")
+        print("[2]. [Read] all students")
+        print("[3]. [Update] a student's data")
+        print("[4]. [Delete] a student")
+        print("[5]. [Import] students from a CSV file")
+        print("[6]. [Export] students to a CSV file")
+        print("[7]. [Exit] the program")
 
         choice = input("Enter your choice as shown in square brackets: ").strip().lower()
 
