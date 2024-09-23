@@ -64,7 +64,7 @@ def create_student():
             # Check for duplicates
             existing_student = check_duplicate(name, student_id)
             if existing_student:
-                print(f"A student with the name '{name}' and ID '{student_id}' already exists.")
+                print(f"A student with the ID '{student_id}' already exists.")
                 while True:
                     choice = input("Overwrite the data? (yes/no/back()/menu()): ").lower()
                     if choice == 'yes':
@@ -217,7 +217,7 @@ def read_students():
         print(tabulate(filtered_table, headers, tablefmt="grid"))
 
         # Ask for filter input or graph
-        user_input = input("\nEnter a filter (e.g., 'Science < 50'), type 'graph()' to display graphs, or 'menu()'/'back()' to return to main menu: ").strip().lower()
+        user_input = input("\nEnter a filter (e.g., 'filter(Science < 50)'), sort (e.g., 'sort(ID, Desc)', type 'graph()' to display graphs, or 'menu()'/'back()' to return to main menu: ").strip().lower()
 
         if user_input == 'menu()' or user_input == 'back()':
             return 'menu()'
@@ -368,7 +368,7 @@ def apply_filter(filter_input):
         "<": operator.lt,
         ">=": operator.ge,
         "<=": operator.le,
-        "=": operator.eq
+        "==": operator.eq
     }
 
     conditions = filter_input.split("and")
