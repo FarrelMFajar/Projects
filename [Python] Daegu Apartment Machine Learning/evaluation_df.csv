@@ -1,0 +1,18 @@
+model_name,model,RMSE,R2,MAE,MSE,MAPE
+Random Forest,RandomForestRegressor(n_estimators=200),45771.18699698479,0.8002749084707651,37329.80507229928,2095001559.1129494,0.18734068601966836
+XGBoost,"XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=0.05, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=3, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             multi_strategy=None, n_estimators=200, n_jobs=None,
+             num_parallel_tree=None, random_state=None, ...)",45788.26571751118,0.8001258327910236,37560.99154517208,2096565277.41741,0.1885106719159016
+Gradient Boosting,GradientBoostingRegressor(),45860.97552801131,0.7994905455034717,37550.34059984469,2103229076.380852,0.18882270709000884
+Decision Tree,DecisionTreeRegressor(max_depth=20),45886.13329561346,0.7992704998640173,37474.82684241591,2105537228.8228061,0.187374147803469
+Ridge,"Ridge(alpha=0.001, max_iter=10000)",52788.55191246258,0.7343390167627131,42790.67890306177,2786631213.0147567,0.2137464448198174
+Lasso,"Lasso(alpha=0.001, max_iter=10000)",52788.56113560796,0.7343389239308398,42790.67502458055,2786632186.767819,0.2137462408485841
+SVR,"SVR(C=10, kernel='linear')",81126.2704132278,0.37256130326981385,63577.54022439924,6581471751.16016,0.370230566405774
