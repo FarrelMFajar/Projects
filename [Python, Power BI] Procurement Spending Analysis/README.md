@@ -22,9 +22,13 @@ The data consists of one fact table of purchase data, linked to two dimension ta
 
 ## Executive Summary of Findings
 
-After a thorough analysis, several critical insights emerged. [cite\_start]While total purchases grew over 570% from 2013 to 2015, this growth was erratic and followed by a sudden 44% drop in 2016[cite: 8, 360]. [cite\_start]This volatility appears to be driven by a highly reactive and unplanned procurement process, characterized by massive, infrequent orders rather than steady, predictable purchasing[cite: 10, 16, 364].
+After a thorough analysis, several critical insights emerged:
+* While total purchases grew over 570% from 2013 to 2015, this growth was erratic and followed by a sudden 44% drop in 2016. This volatility appears to be driven by a highly reactive and unplanned procurement process, characterized by massive, infrequent orders rather than steady, predictable purchasing.
+<img width="1364" height="668" alt="image" src="https://github.com/user-attachments/assets/de0c6e76-5793-48be-aed3-153fd8a73376" /> <img width="1224" height="682" alt="image" src="https://github.com/user-attachments/assets/cab752fb-f767-4994-83c4-bdb9b1112cda" />
 
-[cite\_start]Furthermore, our supply chain is exposed to significant risk, with 85-90% of our total spending concentrated with just two main suppliers, Fabrikam, Inc. and Litware, Inc[cite: 62, 210, 362]. [cite\_start]An investigation into spending patterns also revealed a major anomaly: a massive expenditure on "Tape dispensers" in May 2015, which accounted for nearly 20% of our total budget in that period and may indicate a data entry error or a significant one-off purchase[cite: 11, 13, 368].
+
+
+* Furthermore, our supply chain is exposed to significant risk, with 85-90% of our total spending concentrated with just two main suppliers, Fabrikam, Inc. and Litware, Inc. An investigation into spending patterns also revealed a major anomaly: a massive expenditure on "Tape dispensers" in May 2015, which accounted for nearly 20% of our total budget in that period and may indicate a data entry error or a significant one-off purchase.
 
 ## Insights Deep Dive
 
