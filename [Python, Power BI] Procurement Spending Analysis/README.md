@@ -1,8 +1,6 @@
-# Procurement Spending Analysis
-
 ## Background and Overview
 
-Wide World Importers is a wholesale novelty goods distributor. The Procurement Board has requested the Data Analyst to review the company’s procurement data in order to understand spending trends from 2013 to 2016 and to formulate strategies to optimize future procurement spending.
+GYS Importer is a wholesale novelty goods distributor. The Procurement Board has requested the Data Analyst to review the company’s procurement data in order to understand spending trends from 2013 to 2016 and to formulate strategies to optimize future procurement spending.
 
 The company's procurement data, previously underutilized, holds the key to understanding our spending patterns, supplier dependencies, and operational inefficiencies. This analysis synthesizes this data to address the following key business questions:
 
@@ -12,11 +10,14 @@ The company's procurement data, previously underutilized, holds the key to under
 
 The findings and recommendations are summarized in this report, with links to the full technical analysis for those interested in the details.
 
+The interactive PowerBI dashboard can be downloaded [here](https://github.com/FarrelMFajar/Projects/blob/8e28460f527a0b6061700209fc82bbc102ff70ad/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Dashboard/Procurement%20Monitoring%20Dashboard_final.pbix)
+The Python code utilized to clean, explore, and visualize data can be found [here](https://github.com/FarrelMFajar/Projects/blob/3c319ca795ab0c910e189fc0be5e15dd62a2de89/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Procurement%20Spending%20Analysis.ipynb)
 
 ### Database Relationship Diagram
 
 The data consists of one fact table of purchase data, linked to two dimension tables: Supplier and Stock Item.
-<img width="767" height="629" alt="image" src="https://github.com/user-attachments/assets/873492b5-feda-4887-a6be-faedda55038f" />
+<img width="921" height="354" alt="image" src="https://github.com/user-attachments/assets/3c1fffa9-933e-4e89-8d2c-4ba32353a054" />
+
 
 -----
 
@@ -44,10 +45,9 @@ This reactive purchasing behavior is a significant risk, leading to inefficient 
 
 Our analysis of supplier spending shows a heavy reliance on two vendors: Fabrikam, Inc. and Litware, Inc. Fabrikam, our clothing supplier, and Litware, our packaging supplier, together account for the vast majority of our total procurement spend. This lack of supplier diversity creates a high-risk dependency. Any disruption from either of these suppliers could severely impact our operations.
 
-<img width="1103" height="800" alt="newplot (1)" src="https://github.com/user-attachments/assets/d3b45934-3966-466a-8e4f-920007deafb3" />
+<img width="1101" height="400" alt="procurement flow" src="https://github.com/user-attachments/assets/5f9129a5-85e2-438c-a490-6ae1536b2201" />
 
-
-### 3\. Anomaly in Item Spending: The Tape Dispenser Incident
+### 3\. Anomaly in Item Spending: The Tape Dispenser
 
 A detailed look at item-level spending uncovered a major outlier. In May 2015, the company spent over $600,000 on "Tape dispenser (Red)" from Litware, Inc., making it the single highest-spend item in our entire dataset. This single purchase represents a significant portion of our budget and seems highly unusual for a novelty goods distributor.
 
@@ -56,7 +56,9 @@ This could be a case of mislabeling (e.g., purchasing "packaging tape" but recor
  <img width="852" height="592" alt="image" src="https://github.com/user-attachments/assets/13d13d92-d7e1-42b9-abaf-d50e7b409ffe" />
 
 ### 3\. "The Gu" T-Shirts Dominate Clothing, but with Inefficient Variety
-Six variants of "The Gu" t-shirts are the most procured items in the clothing category, accounting for a substantial portion of sales and being ordered consistently throughout the period. However, dozens of other t-shirt variants were procured only once or twice, primarily at the beginning of 2013. This suggests an inefficient "long-tail" of products that likely contribute to dead stock and increased inventory complexity.
+Six variants of "The Gu" t-shirts are the most procured items in the clothing category, accounting for a substantial portion of items being consistently procured throughout the period. However, dozens of other t-shirt variants were procured only once or twice, primarily at the beginning of 2013. This suggests an inefficient "long-tail" of products that likely contribute to dead stock and increased inventory complexity.
+
+<img width="1101" height="700" alt="the gu shirt" src="https://github.com/user-attachments/assets/5fb71c4c-d32a-4f26-bff2-f3ec303f299b" />
 
 
 ## Actionable Recommendations
