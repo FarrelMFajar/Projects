@@ -1,5 +1,5 @@
-## Background and Overview
-
+#Procurement Spending Analysis
+## Background
 GYS Importer is a wholesale novelty goods distributor. The Procurement Board has requested the Data Analyst to review the company’s procurement data in order to understand spending trends from 2013 to 2016 and to formulate strategies to optimize future procurement spending.
 
 The company's procurement data, previously underutilized, holds the key to understanding our spending patterns, supplier dependencies, and operational inefficiencies. This analysis synthesizes this data to address the following key business questions:
@@ -11,12 +11,24 @@ The company's procurement data, previously underutilized, holds the key to under
 The findings and recommendations are summarized in this report, with links to the full technical analysis for those interested in the details.
 
 The interactive PowerBI dashboard can be downloaded [here](https://github.com/FarrelMFajar/Projects/blob/8e28460f527a0b6061700209fc82bbc102ff70ad/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Dashboard/Procurement%20Monitoring%20Dashboard_final.pbix)
+
 The Python code utilized to clean, explore, and visualize data can be found [here](https://github.com/FarrelMFajar/Projects/blob/3c319ca795ab0c910e189fc0be5e15dd62a2de89/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Procurement%20Spending%20Analysis.ipynb)
 
-### Database Relationship Diagram
+-----
+
+## Database Relationship Diagram
 
 The data consists of one fact table of purchase data, linked to two dimension tables: Supplier and Stock Item.
-<img width="921" height="354" alt="image" src="https://github.com/user-attachments/assets/3c1fffa9-933e-4e89-8d2c-4ba32353a054" />
+<img width="1076" height="476" alt="image" src="https://github.com/user-attachments/assets/c8deeaa2-29fa-4244-8144-19148a3ca50f" />
+
+-----
+## Data Cleaning Framework
+<details>
+<summary><strong>The data is first checked for any anomalies. Several measures were conducted to make the data suitable for analysis.</strong></summary>
+
+<img width="721" height="262" alt="image" src="https://github.com/FarrelMFajar/Projects/blob/a4d982907da952be8d8d47dfec05f4eb143c14f0/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Media/Data%20cleaning%20framework.png" />
+
+</details>
 
 
 -----
