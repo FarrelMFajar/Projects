@@ -1,4 +1,4 @@
-#Procurement Spending Analysis
+# Procurement Spending Analysis
 ## Background
 GYS Importer is a wholesale novelty goods distributor. The Procurement Board has requested the Data Analyst to review the company’s procurement data in order to understand spending trends from 2013 to 2016 and to formulate strategies to optimize future procurement spending.
 
