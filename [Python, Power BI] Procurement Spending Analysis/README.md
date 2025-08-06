@@ -16,15 +16,14 @@ The Python code utilized to clean, explore, and visualize data can be found [her
 
 -----
 
-## Database Relationship Diagram
+## Data used
 
 The data consists of one fact table of purchase data, linked to two dimension tables: Supplier and Stock Item.
-<img width="1076" height="476" alt="image" src="https://github.com/user-attachments/assets/c8deeaa2-29fa-4244-8144-19148a3ca50f" />
+### Database Relationship Diagram
+<img width="807" height="357" alt="image" src="https://github.com/user-attachments/assets/c8deeaa2-29fa-4244-8144-19148a3ca50f" />
 
------
-## Data Cleaning Framework
-<details>
-<summary><strong>The data is first checked for any anomalies. Several measures were conducted to make the data suitable for analysis.</strong></summary>
+### Data Cleaning Framework
+The data is first checked for any anomalies. Several measures were conducted to make the data suitable for analysis.
 
 <img width="721" height="262" alt="image" src="https://github.com/FarrelMFajar/Projects/blob/a4d982907da952be8d8d47dfec05f4eb143c14f0/%5BPython%2C%20Power%20BI%5D%20Procurement%20Spending%20Analysis/Media/Data%20cleaning%20framework.png" />
 
